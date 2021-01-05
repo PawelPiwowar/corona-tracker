@@ -1,15 +1,17 @@
 <template>
 <div>
-  {{ loading }}
-  <div v-for="item in items" v-if="filterData(item)" >
-    {{ item.country }}: {{ item.rate_14_day }} {{ item.year_week }}
+  <select v-model="chosenWeek" name="week">
+    <option v-for="week in weeks" :value="week">{{ week }}</option>
+  </select>
+  <div v-for="item in items" v-if="filterData(item)">
+    {{ item.country }}: {{ item.rate_14_day }}
   </div>
 </div>
 
 </template>
 
 <script>
-import coronaData from "../assets/ECDC.json";
+import coronaData from "../assets/ECDC-short.json";
 
 export default {
   name: 'Main',
@@ -17,18 +19,24 @@ export default {
     return {
       loading: false,
       items: {},
-      lastYearWeek: {}
+      lastYearWeek: {},
+      weeks: [],
+      chosenWeek: null
     }
   },
   created() {
     this.fetchData();
+    this.getWeeks();
   },
   methods: {
-    fetchData(){
+    fetchData() {
       this.items = coronaData;
     },
-    filterData(item){
-     return (item.country_code === 'POL' || item.country_code === 'UKR') && item.year_week === '2020-51' && item.indicator==='cases'
+    test(){
+      console.log('changed');
+    },
+    filterData(item) {
+     return item.year_week === this.chosenWeek && item.indicator==='cases'
     },
     getWeekNumber(d) {
       // Copy date so don't modify original
@@ -42,10 +50,17 @@ export default {
       var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
       // Return array of year and week number
       return d.getUTCFullYear()+'-'+weekNo;
-  },
-  filterWeeks(item, d){
-    return item.year_week === this.getWeekNumber(d)
-  }
+    },
+    getWeeks() {
+      for (let i = 2020; i < 2022; i++) {
+          for (let j = i === 2020 ? 51 : 1; j < 54; j++) {
+          this.weeks.push(i+'-'+j);
+        }
+      }
+    },
+    filterWeeks(item, d) {
+      return item.year_week === this.getWeekNumber(d)
+    }
   },
 }
 </script>
