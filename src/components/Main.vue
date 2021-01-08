@@ -1,5 +1,7 @@
 <template>
 <div>
+<div>The data was collected and originally published by the European Centre for Disease Prevention and Control (ECDC) and was presented on this website in accordance with its <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">Copyright policy</a>. The original source is available <a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19" target="_blank">here</a>. </div>
+<br>
 <div>Current week: {{currentWeek}}</div>
 <div>Most recent week included in the ECDC data: {{mostRecentECDCWeek}}</div>
   Choose the week: <select 
