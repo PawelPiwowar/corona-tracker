@@ -1,6 +1,10 @@
 <template>
 <div>
-  <select v-model="chosenWeek" name="week">
+<div>Current week: {{currentWeek}}</div>
+<div>Most recent week included in the ECDC data: {{mostRecentECDCWeek}}</div>
+  Choose the week: <select 
+        v-model="chosenWeek" 
+          name="week">
     <option v-for="week in weeks" :value="week">{{ week }}</option>
   </select>
   <div v-for="item in items" v-if="filterData(item)">
@@ -21,19 +25,20 @@ export default {
       items: {},
       lastYearWeek: {},
       weeks: [],
+      mostRecentECDCWeek: null,
+      currentWeek: this.getWeekNumber(new Date),
       chosenWeek: null
     }
   },
   created() {
     this.fetchData();
+
+    this.getMostRecentECDCWeek();
     this.getWeeks();
   },
   methods: {
     fetchData() {
       this.items = coronaData;
-    },
-    test(){
-      console.log('changed');
     },
     filterData(item) {
      return item.year_week === this.chosenWeek && item.indicator==='cases'
@@ -52,14 +57,27 @@ export default {
       return d.getUTCFullYear()+'-'+weekNo;
     },
     getWeeks() {
-      for (let i = 2020; i < 2022; i++) {
-          for (let j = i === 2020 ? 51 : 1; j < 54; j++) {
+      let param1 =  parseInt(new Date().getUTCFullYear(), 10) == parseInt(this.mostRecentECDCWeek.substring(0,4)) 
+                    ? parseInt(new Date().getUTCFullYear(), 10)
+                    : parseInt(this.mostRecentECDCWeek.substring(0,4));
+      let param2 =  parseInt(new Date().getUTCFullYear(), 10) == parseInt(this.mostRecentECDCWeek.substring(0,4))
+                    ? parseInt(this.currentWeek.substring(5))
+                    : 53+1;
+
+      for (let i = 2020; i < param1+1; i++) {
+          for (let  j = i === 2020 ? 51 : 1; 
+                    j < 54;
+                    j++) {
           this.weeks.push(i+'-'+j);
         }
       }
     },
     filterWeeks(item, d) {
       return item.year_week === this.getWeekNumber(d)
+    },
+    getMostRecentECDCWeek() {
+      this.mostRecentECDCWeek = this.items[this.items.length-1].year_week;
+      this.chosenWeek = this.items[this.items.length-1].year_week;
     }
   },
 }

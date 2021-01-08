@@ -21,7 +21,7 @@ export default {
       items: {},
       lastYearWeek: {},
       weeks: [],
-      chosenWeek: null
+      chosenWeek: this.getWeekNumber(new Date)
     }
   },
   created() {
