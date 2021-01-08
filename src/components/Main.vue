@@ -61,15 +61,23 @@ export default {
                     ? parseInt(new Date().getUTCFullYear(), 10)
                     : parseInt(this.mostRecentECDCWeek.substring(0,4));
       let param2 =  parseInt(new Date().getUTCFullYear(), 10) == parseInt(this.mostRecentECDCWeek.substring(0,4))
-                    ? parseInt(this.currentWeek.substring(5))
+                    ? parseInt(this.currentWeek.substring(5))+1
                     : 53+1;
 
       for (let i = 2020; i < param1+1; i++) {
-          for (let  j = i === 2020 ? 51 : 1; 
-                    j < 54;
-                    j++) {
-          this.weeks.push(i+'-'+j);
-        }
+          if (i === 2020) {
+            for (let  j = 51; 
+                      j < 54;
+                      j++) {
+              this.weeks.push(i+'-'+j);
+            }
+          } else {
+            for (let  j = 1; 
+                      j < param2;
+                      j++) {
+              this.weeks.push(i+'-'+j);
+            }
+          }
       }
     },
     filterWeeks(item, d) {
