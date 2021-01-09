@@ -1,0 +1,29 @@
+{
+    "pl": {
+        "chooseLanguage": "Wybierz język",
+        "copyrightPolicy1": "Dane zostały zebrane i opublikowane w oryginale przez European Centre for Disease Prevention and Control (ECDC) i zostały zaprezentowane na tej stronie zgodnie z jej ",
+        "copyrightPolicy2": "polityką praw autorskich",
+        "originalSource1": "Oryginalne dane są dostępne ",
+        "here": "tutaj",
+        "warning": "Proszę zauważyć, że dane niekoniecznie będą zgodne z listą opublikowaną przez Ministerstwo Zdrowia Ukrainy.",
+        "currentWeek": "Bieżący tydzień",
+        "mostRecentWeek": "Ostatni tydzień uwzględniony w danych ECDC",
+        "chooseWeek": "Wybierz tydzień",
+        "seeAllCountries": "Zobacz dane dla wszystkich krajów"
+    },
+    "ua": {
+        "chooseLanguage": "Ukrainian translations to be done :)"
+    },
+    "en": {
+        "chooseLanguage": "Choose the language",
+        "copyrightPolicy1": "The data was collected and originally published by the European Centre for Disease Prevention and Control (ECDC) and was presented on this website in accordance with its ",
+        "copyrightPolicy2": "copyright policy",
+        "originalSource1": "The original source is available",
+        "here": "here",
+        "warning": "Please note that the data published here might not directly correspond to the list published by the Ministry of Health of Ukraine.",
+        "currentWeek": "Current week",
+        "mostRecentWeek": "Most recent week included in the ECDC data",
+        "chooseWeek": "Choose the week",
+        "seeAllCountries": "See the data for all countries"
+    }
+}

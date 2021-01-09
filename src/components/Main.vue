@@ -1,10 +1,12 @@
 <template>
 <div>
-<div>The data was collected and originally published by the European Centre for Disease Prevention and Control (ECDC) and was presented on this website in accordance with its <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">Copyright policy</a>. The original source is available <a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19" target="_blank">here</a>. </div>
+<div>{{ translations[locale].chooseLanguage }}: <a href="/?lang=pl">PL </a><a href="/?lang=ua">UA </a><a href="/">EN </a></div>
+<div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19" target="_blank">{{translations[locale].here}}</a>. </div>
+<div>{{translations[locale].warning}}</div>
 <br>
-<div>Current week: {{currentWeek}}</div>
-<div>Most recent week included in the ECDC data: {{mostRecentECDCWeek}}</div>
-  Choose the week: <select 
+<div>{{translations[locale].currentWeek}}: {{currentWeek}}</div>
+<div>{{translations[locale].mostRecentWeek}}: {{mostRecentECDCWeek}}</div>
+  {{ translations[locale].chooseWeek }}: <select 
         v-model="chosenWeek" 
           name="week">
     <option v-for="week in weeks" :value="week">{{ week }}</option>
@@ -12,12 +14,14 @@
   <div v-for="item in items" v-if="filterData(item)">
     {{ item.country }}: {{ item.rate_14_day }}
   </div>
+  <div>{{ translations[locale].seeAllCountries }} <a :href="'/full?lang='+ locale"  target="_blank">{{translations[locale].here}}</a>.</div>
 </div>
 
 </template>
 
 <script>
 import coronaData from "../assets/ECDC-short.json";
+import translatedData from "../assets/translations.json";
 
 export default {
   name: 'Main',
@@ -29,7 +33,9 @@ export default {
       weeks: [],
       mostRecentECDCWeek: null,
       currentWeek: this.getWeekNumber(new Date),
-      chosenWeek: null
+      chosenWeek: null,
+      locale: this.$route.query.lang ? this.$route.query.lang : 'en',
+      translations: {}
     }
   },
   created() {
@@ -41,6 +47,7 @@ export default {
   methods: {
     fetchData() {
       this.items = coronaData;
+      this.translations = translatedData
     },
     filterData(item) {
      return item.year_week === this.chosenWeek && item.indicator==='cases'
