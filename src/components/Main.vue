@@ -62,8 +62,20 @@ export default {
       var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
       // Calculate full weeks to nearest Thursday
       var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+      weekNo = weekNo.toString();
+      if (weekNo.length === 1) {
+        weekNo = '0'+weekNo;
+      }
       // Return array of year and week number
       return d.getUTCFullYear()+'-'+weekNo;
+    },
+    addTrailingZeroToWeeks(week){
+      console.log(week, week.length)
+      if (week.length === 1) {
+        week = '0'+week;
+      }
+      return week;
+
     },
     getWeeks() {
       let param1 =  parseInt(new Date().getUTCFullYear(), 10) == parseInt(this.mostRecentECDCWeek.substring(0,4)) 
@@ -78,12 +90,14 @@ export default {
             for (let  j = 51; 
                       j < 54;
                       j++) {
+              j = this.addTrailingZeroToWeeks(j);
               this.weeks.push(i+'-'+j);
             }
           } else {
             for (let  j = 1; 
                       j < param2;
                       j++) {
+              j = this.addTrailingZeroToWeeks(j);
               this.weeks.push(i+'-'+j);
             }
           }
