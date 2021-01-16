@@ -70,7 +70,7 @@ export default {
       return d.getUTCFullYear()+'-'+weekNo;
     },
     addTrailingZeroToWeeks(week){
-      console.log(week, week.length)
+      week = week.toString();
       if (week.length === 1) {
         week = '0'+week;
       }
