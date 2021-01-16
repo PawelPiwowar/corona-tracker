@@ -14,7 +14,7 @@
   <div v-for="item in items" v-if="filterData(item)">
     {{ item.country }}: {{ item.rate_14_day }}
   </div>
-  <div>{{ translations[locale].seeAllCountries }} <a :href="'/full?lang='+ locale"  target="_blank">{{translations[locale].here}}</a>.</div>
+  <div>{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale"  target="_blank">{{translations[locale].here}}</a>.</div>
 </div>
 
 </template>

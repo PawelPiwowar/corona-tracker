@@ -12,13 +12,22 @@
         "seeAllCountries": "Zobacz dane dla wszystkich krajów"
     },
     "ua": {
-        "chooseLanguage": "Ukrainian translations to be done :)"
+        "chooseLanguage": "Виберіть мову",
+        "copyrightPolicy1": "Дані були зібрані та опубліковані European Centre for Disease Prevention and Control (ECDC) та представлені на цьому веб-сайті відповідно до ",
+        "copyrightPolicy2": "політики щодо авторських прав",
+        "originalSource1": "Оригінал доступний ",
+        "here": "тут",
+        "warning": "Зверніть увагу, що опубліковані тут дані можуть не відповідати прямо переліку, опублікованому Міністерством охорони здоров’я України.",
+        "currentWeek": "Поточний тиждень",
+        "mostRecentWeek": "Останній тиждень, включений до даних ECDC",
+        "chooseWeek": "Виберіть тиждень",
+        "seeAllCountries": "Перегляньте дані для всіх країн"
     },
     "en": {
         "chooseLanguage": "Choose the language",
         "copyrightPolicy1": "The data was collected and originally published by the European Centre for Disease Prevention and Control (ECDC) and was presented on this website in accordance with its ",
         "copyrightPolicy2": "copyright policy",
-        "originalSource1": "The original source is available",
+        "originalSource1": "The original source is available ",
         "here": "here",
         "warning": "Please note that the data published here might not directly correspond to the list published by the Ministry of Health of Ukraine.",
         "currentWeek": "Current week",
