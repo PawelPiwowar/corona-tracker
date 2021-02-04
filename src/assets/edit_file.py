@@ -12,5 +12,7 @@ for el in data:
 with open('ECDC-short.json', 'w') as outfile:
     json.dump(data2, outfile)
 
+print('finished')
+
 
 

@@ -11,16 +11,16 @@
           name="week">
     <option v-for="week in weeks" :value="week">{{ week }}</option>
   </select>
+  <div v-if="!isFull">{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale">{{translations[locale].here}}</a>.</div>
+  <div v-else> {{ translations[locale].seePolandAndUkraine }}  <a :href=" locale==='en' ? '/' : '/?lang='+ locale">{{translations[locale].here}}</a>.</div>
   <div v-for="item in items" v-if="filterData(item)">
     {{ item.country }}: {{ item.rate_14_day }}
   </div>
-  <div>{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale"  target="_blank">{{translations[locale].here}}</a>.</div>
 </div>
 
 </template>
 
 <script>
-import coronaData from "../assets/ECDC-short.json";
 import translatedData from "../assets/translations.json";
 
 export default {
@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       loading: false,
-      items: {},
       lastYearWeek: {},
       weeks: [],
       mostRecentECDCWeek: null,
@@ -36,6 +35,18 @@ export default {
       chosenWeek: null,
       locale: this.$route.query.lang ? this.$route.query.lang : 'en',
       translations: {}
+    }
+  },
+  computed: {
+    isFull() {
+      return this.$route.path === '/full' ? true : false;
+    },
+    items() {
+      if (this.isFull) {
+        return require("../assets/pobrane.json");
+      } else {
+        return require("../assets/ECDC-short.json");
+      }
     }
   },
   created() {
@@ -46,7 +57,6 @@ export default {
   },
   methods: {
     fetchData() {
-      this.items = coronaData;
       this.translations = translatedData
     },
     filterData(item) {
@@ -82,7 +92,7 @@ export default {
                     ? parseInt(new Date().getUTCFullYear(), 10)
                     : parseInt(this.mostRecentECDCWeek.substring(0,4));
       let param2 =  parseInt(new Date().getUTCFullYear(), 10) == parseInt(this.mostRecentECDCWeek.substring(0,4))
-                    ? parseInt(this.currentWeek.substring(5))+1
+                    ? parseInt(this.mostRecentECDCWeek.substring(5))+1
                     : 53+1;
 
       for (let i = 2020; i < param1+1; i++) {
