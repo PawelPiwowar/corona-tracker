@@ -1,0 +1,4 @@
+rm var/www/html/corona-tracker/src/assets/ECDC-short.json -f
+aws s3 cp s3://s3-pawel-demo-resized/pobrane.json /var/www/html/corona-tracker/src/assets/ECDC-short.json
+rm var/www/html/corona-tracker/src/assets/pobrane.json -f
+aws s3 cp s3://s3-pawel-demo/pobrane.json /var/www/html/corona-tracker/src/assets/pobrane.json
