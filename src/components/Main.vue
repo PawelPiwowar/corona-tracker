@@ -18,7 +18,7 @@
         <div v-if="!isFull">{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale">{{translations[locale].here}}</a>.</div>
         <div v-else> {{ translations[locale].seePolandAndUkraine }} <a :href=" locale==='en' ? '/' : '/?lang='+ locale">{{translations[locale].here}}</a>.</div>
         <div v-for="item in items" v-if="filterData(item)">
-            {{ item.country }}: {{ item.rate_14_day }}
+            <div class="cell">{{ item.country }}: {{ item.rate_14_day }}</div>
         </div>
     </div>
 </template>
@@ -121,3 +121,13 @@ export default {
     },
 }
 </script>
+<style scoped>
+.cell {
+    border: 1px solid black;
+    margin-left: 2px;
+    padding-left: 5px;
+    width: 300px;
+    border-bottom: none;
+}
+
+</style>
