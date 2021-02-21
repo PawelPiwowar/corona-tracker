@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 with open('pobrane.json', 'r') as json_file:
     data = json.load(json_file)
@@ -24,10 +25,10 @@ with open('pobrane.json', 'r') as json_file:
 
 dataFullFinished = []
 
-for el in reversed(dataFull):
-    if el['year_week'] == '202-50':
-        break
-    if el['indicator'] == 'cases':
+for el in dataFull:
+    comparison_year = datetime.strptime('2020 50 0', "%Y %W %w")
+    datetime = datetime.strptime(el['year_week'].replace('-', ' ') + ' 0', "%Y %W %w")
+    if (el['indicator'] == 'cases') and (datetime > comparison_year):
         check = el.get('country_code', None)
         if check:
             del el['country_code']
