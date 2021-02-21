@@ -1,6 +1,11 @@
 <template>
     <div>
-        <div>{{ translations[locale].chooseLanguage }}: <a href="/?lang=pl">PL </a><a href="/?lang=ua">UA </a><a href="/">EN </a></div>
+        <div>
+            {{ translations[locale].chooseLanguage }}: 
+            <a :href= "isFull ? '/full?lang=pl' : '/?lang=pl'">PL </a>
+            <a :href= "isFull ? '/full?lang=ua' : '/?lang=ua'">UA </a>
+            <a :href= "isFull ? '/full' : '/'">EN </a>
+        </div>
         <div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
                 target="_blank">{{translations[locale].here}}</a>. </div>
         <div>{{translations[locale].warning}}</div>
@@ -41,7 +46,7 @@ export default {
         },
         items() {
             if (this.isFull) {
-                return require("../assets/pobrane.json");
+                return require("../assets/ECDC-full.json");
             } else {
                 return require("../assets/ECDC-short.json");
             }
@@ -49,7 +54,6 @@ export default {
     },
     created() {
         this.fetchData();
-
         this.getMostRecentECDCWeek();
         this.getWeeks();
     },
@@ -58,7 +62,7 @@ export default {
             this.translations = translatedData
         },
         filterData(item) {
-            return item.year_week === this.chosenWeek && item.indicator === 'cases'
+            return item.year_week === this.chosenWeek
         },
         getWeekNumber(d) {
             // Copy date so don't modify original
@@ -105,6 +109,7 @@ export default {
                     }
                 }
             }
+            this.weeks = this.weeks.reverse();
         },
         filterWeeks(item, d) {
             return item.year_week === this.getWeekNumber(d)
