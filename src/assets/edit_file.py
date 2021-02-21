@@ -40,7 +40,7 @@ for el in dataFull:
         dataFullFinished.append(el)
 
 with open('ECDC-full.json', 'w') as outfile2:
-    json.dump(dataFullFinished, outfile2)
+    json.dump(sorted(dataFullFinished, key=lambda x : float(x.get('rate_14_day', 0)), reverse=True), outfile2)
 
 print('finished')
 
