@@ -1,11 +1,13 @@
 <template>
     <div>
-        <div>
-            {{ translations[locale].chooseLanguage }}: 
-            <a :href= "isFull ? '/full?lang=pl' : '/?lang=pl'">PL </a>
-            <a :href= "isFull ? '/full?lang=ua' : '/?lang=ua'">UA </a>
-            <a :href= "isFull ? '/full' : '/'">EN </a>
-        </div>
+        <b-navbar toggleable="lg" type="dark" variant="info">
+            <div>
+                {{ translations[locale].chooseLanguage }}: 
+                <a :href= "isFull ? '/full?lang=pl' : '/?lang=pl'">PL </a>
+                <a :href= "isFull ? '/full?lang=ua' : '/?lang=ua'">UA </a>
+                <a :href= "isFull ? '/full' : '/'">EN </a>
+            </div>
+        </b-navbar>
         <div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
                 target="_blank">{{translations[locale].here}}</a>. </div>
         <div>{{translations[locale].warning}}</div>
@@ -18,7 +20,7 @@
         <div v-if="!isFull">{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale">{{translations[locale].here}}</a>.</div>
         <div v-else> {{ translations[locale].seePolandAndUkraine }} <a :href=" locale==='en' ? '/' : '/?lang='+ locale">{{translations[locale].here}}</a>.</div>
         <div v-for="item in items" v-if="filterData(item)">
-            <div class="cell">{{ item.country }}: {{ item.rate_14_day }}</div>
+            <div>{{ item.country }}: {{ item.rate_14_day }}</div>
         </div>
     </div>
 </template>
@@ -121,13 +123,3 @@ export default {
     },
 }
 </script>
-<style scoped>
-.cell {
-    border: 1px solid black;
-    margin-left: 2px;
-    padding-left: 5px;
-    width: 300px;
-    border-bottom: none;
-}
-
-</style>
