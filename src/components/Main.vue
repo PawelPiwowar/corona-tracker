@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar class="navClass" toggleable="lg" type="dark" variant="info">
             <b-navbar-nav>
                 <b-dropdown :text="translations[locale].chooseLanguage">
                     <b-dropdown-item :href= "isFull ? '/full?lang=pl' : '/?lang=pl'">PL</b-dropdown-item>
@@ -9,7 +9,7 @@
                 </b-dropdown>
                 <b-nav-item>
                  <model-list-select 
-                    id="select"
+                    class="selectClass"
                     v-if="isFull"
                     :list="countries"
                      v-model="chosenCountry"
@@ -209,8 +209,13 @@ export default {
     margin: 5px;
 }
 
-#select {
-    width: 300px !important;
+.selectClass {
+    min-width: 150px !important;
+    color: black !important;
+}
+
+.navClass {
+    min-height: 70px;
 }
 
 </style>
