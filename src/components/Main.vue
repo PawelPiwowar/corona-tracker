@@ -8,6 +8,14 @@
                 <a :href= "isFull ? '/full' : '/'">EN </a>
             </div>
         </b-navbar>
+        <multiselect 
+            v-model="chosenCountry" 
+            :options="filterItems(true)"
+            label="country"
+            track-by="country"
+            placeholder="Select one"
+            @input="adjustDateInChosenCountry($event)">
+        </multiselect>
         <div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
                 target="_blank">{{translations[locale].here}}</a>. </div>
         <div>{{translations[locale].warning}}</div>
@@ -19,7 +27,7 @@
       </select>
         <div v-if="!isFull">{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale">{{translations[locale].here}}</a>.</div>
         <div v-else> {{ translations[locale].seePolandAndUkraine }} <a :href=" locale==='en' ? '/' : '/?lang='+ locale">{{translations[locale].here}}</a>.</div>
-        <div v-for="item in items" v-if="filterData(item)">
+        <div v-for="item in filterItems()">
             <div class="cell">{{ item.country }}: {{ item.rate_14_day }}</div>
         </div>
     </div>
@@ -27,9 +35,13 @@
 
 <script>
 import translatedData from "../assets/translations.json";
+import Multiselect from 'vue-multiselect';
 
 export default {
     name: 'Main',
+    components: {
+        Multiselect
+    },
     data() {
         return {
             loading: false,
@@ -39,7 +51,8 @@ export default {
             currentWeek: this.getWeekNumber(new Date),
             chosenWeek: null,
             locale: this.$route.query.lang ? this.$route.query.lang : 'en',
-            translations: {}
+            translations: {},
+            chosenCountry: null
         }
     },
     computed: {
@@ -52,7 +65,7 @@ export default {
             } else {
                 return require("../assets/ECDC-short.json");
             }
-        }
+        },
     },
     created() {
         this.fetchData();
@@ -60,6 +73,16 @@ export default {
         this.getWeeks();
     },
     methods: {
+        adjustDateInChosenCountry(e) {
+            if (this.chosenCountry.year_week !== this.chosenWeek) {
+                console.log('fired');
+                this.filterData().forEach(item => {
+                    if ((item.country === e.country) && (item.year_week === this.chosenWeek)) {
+                        this.chosenCountry = item;
+                    }
+                })
+            }
+        },
         fetchData() {
             this.translations = translatedData
         },
@@ -82,6 +105,25 @@ export default {
             }
             // Return array of year and week number
             return d.getUTCFullYear() + '-' + weekNo;
+        },
+        filterItems(sortAlphabetically = false) {
+            let filtered = [];
+            this.items.forEach(item => {
+                if ((!filtered.includes(item.country)) && this.filterData(item)) {
+                    filtered.push(item);
+                } 
+            });
+
+            if (sortAlphabetically) {
+                return filtered.sort(function(a, b){
+                if(a.country < b.country) { return -1; }
+                if(a.country > b.country) { return 1; }
+                return 0;
+            });
+            } else {
+                return filtered;            
+            }
+            
         },
         addTrailingZeroToWeeks(week) {
             week = week.toString();
