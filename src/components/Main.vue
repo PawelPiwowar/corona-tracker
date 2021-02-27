@@ -1,21 +1,24 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <div>
-                {{ translations[locale].chooseLanguage }}: 
-                <a :href= "isFull ? '/full?lang=pl' : '/?lang=pl'">PL </a>
-                <a :href= "isFull ? '/full?lang=ua' : '/?lang=ua'">UA </a>
-                <a :href= "isFull ? '/full' : '/'">EN </a>
-            </div>
+            <b-navbar-nav>
+                <b-dropdown :text="translations[locale].chooseLanguage">
+                    <b-dropdown-item :href= "isFull ? '/full?lang=pl' : '/?lang=pl'">PL</b-dropdown-item>
+                    <b-dropdown-item :href= "isFull ? '/full?lang=ua' : '/?lang=ua'">UA</b-dropdown-item>
+                    <b-dropdown-item :href= "isFull ? '/full' : '/'">EN</b-dropdown-item>
+                </b-dropdown>
+                <b-nav-item>
+                 <model-list-select 
+                    :list="filterItems(true)"
+                     v-model="chosenCountry"
+                     option-text="country"
+                     option-value="country"
+                     placeholder="select item"
+                    >
+                </model-list-select>
+                </b-nav-item>
+            </b-navbar-nav>
         </b-navbar>
-        <multiselect 
-            v-model="chosenCountry" 
-            :options="filterItems(true)"
-            label="country"
-            track-by="country"
-            placeholder="Select one"
-            @input="adjustDateInChosenCountry($event)">
-        </multiselect>
         <div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
                 target="_blank">{{translations[locale].here}}</a>. </div>
         <div>{{translations[locale].warning}}</div>
@@ -35,12 +38,12 @@
 
 <script>
 import translatedData from "../assets/translations.json";
-import Multiselect from 'vue-multiselect';
+import { ModelListSelect    } from 'vue-search-select';
 
 export default {
     name: 'Main',
     components: {
-        Multiselect
+        ModelListSelect   
     },
     data() {
         return {
@@ -52,7 +55,12 @@ export default {
             chosenWeek: null,
             locale: this.$route.query.lang ? this.$route.query.lang : 'en',
             translations: {},
-            chosenCountry: null
+            chosenCountry: {
+                country: '',
+                rate_14_day: '',
+                weekly_count: '',
+                year_week: ''
+                }
         }
     },
     computed: {
@@ -173,5 +181,11 @@ export default {
     width: 300px;
     border-bottom: none;
 }
+
+.multi {
+    position: absolute;
+    z-index: 50;
+}
+
 
 </style>
