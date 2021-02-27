@@ -10,7 +10,8 @@
         "mostRecentWeek": "Ostatni tydzień uwzględniony w danych ECDC",
         "chooseWeek": "Wybierz tydzień",
         "seeAllCountries": "Zobacz dane dla wszystkich krajów",
-        "seePolandAndUkraine": "Dane ograniczone do Polski i Ukrainy dostępne są"
+        "seePolandAndUkraine": "Dane ograniczone do Polski i Ukrainy dostępne są",
+        "selectCountryToCompare": "Wybierz kraj do porównania"
     },
     "ua": {
         "chooseLanguage": "Виберіть мову",
@@ -23,7 +24,8 @@
         "mostRecentWeek": "Останній тиждень, включений до даних ECDC",
         "chooseWeek": "Виберіть тиждень",
         "seeAllCountries": "Перегляньте дані для всіх країн",
-        "seePolandAndUkraine": "Дані лише для Польщі та України доступні"
+        "seePolandAndUkraine": "Дані лише для Польщі та України доступні",
+        "selectCountryToCompare": "Виберіть країну для порівняння"
     },
     "en": {
         "chooseLanguage": "Choose the language",
@@ -36,6 +38,7 @@
         "mostRecentWeek": "Most recent week included in the ECDC data",
         "chooseWeek": "Choose the week",
         "seeAllCountries": "See the data for all countries",
-        "seePolandAndUkraine": "See only the data about Poland and Ukraine"
+        "seePolandAndUkraine": "See only the data about Poland and Ukraine",
+        "selectCountryToCompare": "Select the country to compare"
     }
 }

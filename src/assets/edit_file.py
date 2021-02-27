@@ -14,6 +14,7 @@ for el in data:
         del el['indicator']
         del el['source']
         del el['cumulative_count']
+        del el['weekly_count']
         data2.append(el)
 
 with open('ECDC-short.json', 'w') as outfile:
@@ -37,6 +38,7 @@ for el in dataFull:
         del el['indicator']
         del el['source']
         del el['cumulative_count']
+        del el['weekly_count']
         dataFullFinished.append(el)
 
 with open('ECDC-full.json', 'w') as outfile2:

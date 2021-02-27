@@ -9,36 +9,45 @@
                 </b-dropdown>
                 <b-nav-item>
                  <model-list-select 
-                    :list="filterItems(true)"
+                    id="select"
+                    v-if="isFull"
+                    :list="countries"
                      v-model="chosenCountry"
                      option-text="country"
                      option-value="country"
-                     placeholder="select item"
+                     :placeholder="translations[locale].selectCountryToCompare"
+                     @select="filterItems()"
                     >
                 </model-list-select>
                 </b-nav-item>
             </b-navbar-nav>
         </b-navbar>
+
+    <b-container fluid>
         <div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
                 target="_blank">{{translations[locale].here}}</a>. </div>
         <div>{{translations[locale].warning}}</div>
-        <br>
-        <div>{{translations[locale].currentWeek}}: {{currentWeek}}</div>
-        <div>{{translations[locale].mostRecentWeek}}: {{mostRecentECDCWeek}}</div>
-        {{ translations[locale].chooseWeek }}: <select v-model="chosenWeek" name="week">
-        <option v-for="week in weeks" :value="week">{{ week }}</option>
-      </select>
+        <div>{{translations[locale].currentWeek}}: <b>{{currentWeek}}</b></div>
+        <div>{{translations[locale].mostRecentWeek}}: <b>{{mostRecentECDCWeek}}</b></div>
+        <div>{{ translations[locale].chooseWeek }}: 
+        <select v-model="chosenWeek" name="week">
+            <option v-for="week in weeks" :value="week">{{ week }}</option>
+        </select>
+      </div>
         <div v-if="!isFull">{{ translations[locale].seeAllCountries }} <a :href=" locale==='en' ? '/full' : '/full?lang='+ locale">{{translations[locale].here}}</a>.</div>
         <div v-else> {{ translations[locale].seePolandAndUkraine }} <a :href=" locale==='en' ? '/' : '/?lang='+ locale">{{translations[locale].here}}</a>.</div>
-        <div v-for="item in filterItems()">
-            <div class="cell">{{ item.country }}: {{ item.rate_14_day }}</div>
-        </div>
+        <b-table 
+        hover 
+        small
+        :items="filteredItems" 
+        :fields="fields"></b-table>
+    </b-container>
     </div>
 </template>
 
 <script>
 import translatedData from "../assets/translations.json";
-import { ModelListSelect    } from 'vue-search-select';
+import { ModelListSelect } from 'vue-search-select';
 
 export default {
     name: 'Main',
@@ -56,11 +65,18 @@ export default {
             locale: this.$route.query.lang ? this.$route.query.lang : 'en',
             translations: {},
             chosenCountry: {
-                country: '',
-                rate_14_day: '',
-                weekly_count: '',
-                year_week: ''
+                    country: ''
+                },
+            fields: [
+                {
+                    key: 'country',
+                    sortable: false
+                },
+                {
+                    key: 'rate_14_day',
+                    sortable: true
                 }
+            ]
         }
     },
     computed: {
@@ -74,6 +90,28 @@ export default {
                 return require("../assets/ECDC-short.json");
             }
         },
+        countries() {
+            let filtered = []
+                this.items.forEach(item => {
+                    let object = {
+                        country: item.country
+                    };
+                if ((!filtered.some(el => el.country === object.country))) {
+                    filtered.push(object);
+                } 
+            });
+            return filtered.sort(this.compare);
+        },
+        filteredItems(){
+            let filtered = [];
+            this.items.forEach(item => {
+                if ((!filtered.includes(item.country)) && this.filterData(item)) {
+                    filtered.push(item);
+                } 
+            });
+            return filtered;            
+        
+        },
     },
     created() {
         this.fetchData();
@@ -81,21 +119,25 @@ export default {
         this.getWeeks();
     },
     methods: {
-        adjustDateInChosenCountry(e) {
-            if (this.chosenCountry.year_week !== this.chosenWeek) {
-                console.log('fired');
-                this.filterData().forEach(item => {
-                    if ((item.country === e.country) && (item.year_week === this.chosenWeek)) {
-                        this.chosenCountry = item;
-                    }
-                })
-            }
-        },
         fetchData() {
             this.translations = translatedData
         },
+        compare(a, b) {
+            if ( a.country < b.country ){
+                return -1;
+            }
+            if ( a.country > b.country ){
+                return 1;
+            }
+            return 0;
+        },
         filterData(item) {
-            return item.year_week === this.chosenWeek
+            if (!this.chosenCountry.country){
+                return item.year_week === this.chosenWeek
+            } else {
+                return ((item.year_week === this.chosenWeek) && (item.country==="Ukraine" || item.country === this.chosenCountry.country))
+            }
+            
         },
         getWeekNumber(d) {
             // Copy date so don't modify original
@@ -113,25 +155,6 @@ export default {
             }
             // Return array of year and week number
             return d.getUTCFullYear() + '-' + weekNo;
-        },
-        filterItems(sortAlphabetically = false) {
-            let filtered = [];
-            this.items.forEach(item => {
-                if ((!filtered.includes(item.country)) && this.filterData(item)) {
-                    filtered.push(item);
-                } 
-            });
-
-            if (sortAlphabetically) {
-                return filtered.sort(function(a, b){
-                if(a.country < b.country) { return -1; }
-                if(a.country > b.country) { return 1; }
-                return 0;
-            });
-            } else {
-                return filtered;            
-            }
-            
         },
         addTrailingZeroToWeeks(week) {
             week = week.toString();
@@ -182,10 +205,12 @@ export default {
     border-bottom: none;
 }
 
-.multi {
-    position: absolute;
-    z-index: 50;
+.container-fluid div {
+    margin: 5px;
 }
 
+#select {
+    width: 300px !important;
+}
 
 </style>
