@@ -24,8 +24,8 @@
         </b-navbar>
 
     <b-container fluid>
-        <div>{{translations[locale].copyrightPolicy1}} <a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}} </a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
-                target="_blank">{{translations[locale].here}}</a>. </div>
+        <div>{{translations[locale].copyrightPolicy1}}<a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}}</a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
+                target="_blank">{{translations[locale].here}}</a>.</div>
         <div>{{translations[locale].warning}}</div>
         <div>{{translations[locale].currentWeek}}: <b>{{currentWeek}}</b></div>
         <div>{{translations[locale].mostRecentWeek}}: <b>{{mostRecentECDCWeek}}</b></div>
