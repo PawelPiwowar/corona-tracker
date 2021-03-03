@@ -26,9 +26,11 @@
     <b-container fluid>
         <div>{{translations[locale].copyrightPolicy1}}<a href="https://www.ecdc.europa.eu/en/copyright" target="_blank">{{translations[locale].copyrightPolicy2}}</a>. {{translations[locale].originalSource1}}<a href="https://www.ecdc.europa.eu/en/publications-data/data-national-14-day-notification-rate-covid-19"
                 target="_blank">{{translations[locale].here}}</a>.</div>
-        <div>{{translations[locale].warning}}</div>
+        <div>{{translations[locale].warning}} {{translations[locale].disclaimer}}</div>
         <div>{{translations[locale].currentWeek}}: <b>{{currentWeek}}</b></div>
         <div>{{translations[locale].mostRecentWeek}}: <b>{{mostRecentECDCWeek}}</b></div>
+        <div>{{translations[locale].dataPublishedOn}}: <b>{{this.getDateOfWeek()}}</b></div>
+        <div>{{translations[locale].mozDatePrognosis}}: <b>{{this.getDateOfWeek(true)}}</b></div>
         <div>{{ translations[locale].chooseWeek }}: 
         <select v-model="chosenWeek" name="week">
             <option v-for="week in weeks" :value="week">{{ week }}</option>
@@ -117,6 +119,7 @@ export default {
         this.fetchData();
         this.getMostRecentECDCWeek();
         this.getWeeks();
+        this.getDateOfWeek(this.mostRecentECDCWeek);
     },
     methods: {
         fetchData() {
@@ -192,6 +195,20 @@ export default {
         getMostRecentECDCWeek() {
             this.mostRecentECDCWeek = this.items[this.items.length - 1].year_week;
             this.chosenWeek = this.items[this.items.length - 1].year_week;
+        },
+        getDateOfWeek(isForecast = false) {
+            let week = this.mostRecentECDCWeek;
+            let weekSplit = week.split('-');
+            let y = parseInt(weekSplit[0]);
+            let w = parseInt(weekSplit[1])+1;
+            let date = new Date(y, 0, (1 + (w) * 7)); // Elle's method
+            date.setDate(date.getDate() + (4 - date.getDay())); // 0 - Sunday, 1 - Monday etc
+            
+            let monthNumber = date.getUTCMonth(); //months from 1-12
+            let day = !isForecast ? date.getUTCDate() : date.getUTCDate()+1;
+            let year = date.getUTCFullYear();
+
+            return day+1 + ' ' + this.translations[this.locale].months[monthNumber] + ' ' + year;
         }
     },
 }

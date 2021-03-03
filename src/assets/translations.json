@@ -6,12 +6,16 @@
         "originalSource1": "Oryginalne dane są dostępne ",
         "here": "tutaj",
         "warning": "Proszę zauważyć, że dane niekoniecznie będą zgodne z listą opublikowaną przez Ministerstwo Zdrowia Ukrainy.",
+        "disclaimer": "Autor tej strony nie bierze odpowiedzialności za wszelkie możliwe rozbieżności pomiędzy poniższymi danymi, a listą krajów czerwonej/zielonej strefy publikowaną przez ministerstwo, szczególnie w odniesieniu do wskaźnika dla Ukrainy, który na stronie ministerstwa jest zazwyczaj inny.",
         "currentWeek": "Bieżący tydzień",
         "mostRecentWeek": "Ostatni tydzień uwzględniony w danych ECDC",
         "chooseWeek": "Wybierz tydzień",
         "seeAllCountries": "Zobacz dane dla wszystkich krajów",
         "seePolandAndUkraine": "Dane ograniczone do Polski i Ukrainy dostępne są",
-        "selectCountryToCompare": "Wybierz kraj do porównania"
+        "selectCountryToCompare": "Wybierz kraj do porównania",
+        "dataPublishedOn": "Data opublikowania danych na stronie ECDC",
+        "mozDatePrognosis": "Przewidywana data publikacji na liście Ministerstwa Zdrowia Ukrainy",
+        "months": [ "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"]
     },
     "ua": {
         "chooseLanguage": "Виберіть мову",
@@ -20,12 +24,16 @@
         "originalSource1": "Оригінал доступний ",
         "here": "тут",
         "warning": "Зверніть увагу, що опубліковані тут дані можуть не відповідати прямо переліку, опублікованому Міністерством охорони здоров’я України.",
+        "disclaimer": "Автор цієї сторінки не несе відповідальності за будь-які розбіжності між даними нижче та переліком країн червоної / зеленої зони, опублікованим міністерством, особливо щодо показника для України, який зазвичай відрізняється на веб-сайті міністерства.",
         "currentWeek": "Поточний тиждень",
         "mostRecentWeek": "Останній тиждень, включений до даних ECDC",
         "chooseWeek": "Виберіть тиждень",
         "seeAllCountries": "Перегляньте дані для всіх країн",
         "seePolandAndUkraine": "Дані лише для Польщі та України доступні",
-        "selectCountryToCompare": "Виберіть країну для порівняння"
+        "selectCountryToCompare": "Виберіть країну для порівняння",
+        "dataPublishedOn": "Дата публікації на сайті ECDC",
+        "mozDatePrognosis": "Очікувана дата публікації у списку МОЗ України",
+        "months": [ "січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"]
     },
     "en": {
         "chooseLanguage": "Choose the language",
@@ -34,11 +42,15 @@
         "originalSource1": "The original source is available ",
         "here": "here",
         "warning": "Please note that the data published here might not directly correspond to the list published by the Ministry of Health of Ukraine.",
+        "disclaimer": "The creator of this website does not and cannot bear any responsibility for discrepancies betweem the data below and the list of green/red zone countries published by the Ministry, especially in regards to the rate of Ukraine, which is usually different on the ministry's website.",
         "currentWeek": "Current week",
         "mostRecentWeek": "Most recent week included in the ECDC data",
         "chooseWeek": "Choose the week",
         "seeAllCountries": "See the data for all countries",
         "seePolandAndUkraine": "See only the data about Poland and Ukraine",
-        "selectCountryToCompare": "Select the country to compare"
+        "selectCountryToCompare": "Select the country to compare",
+        "dataPublishedOn": "Date of publication on the ECDC website",
+        "mozDatePrognosis": "Expected date of publication on the website of the Ministry of Health of Ukraine",
+        "months": [ "January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"]
     }
 }
