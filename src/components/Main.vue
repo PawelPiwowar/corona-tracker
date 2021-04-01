@@ -203,12 +203,11 @@ export default {
             let w = parseInt(weekSplit[1])+1;
             let date = new Date(y, 0, (1 + (w) * 7)); // Elle's method
             date.setDate(date.getDate() + (4 - date.getDay())); // 0 - Sunday, 1 - Monday etc
-            
-            let monthNumber = date.getUTCMonth(); //months from 1-12
-            let day = !isForecast ? date.getUTCDate() : date.getUTCDate()+1;
+            let monthNumber = date.getMonth(); //months from 1-12
+            let day = !isForecast ? date.getDate() : date.getDate()+1;
             let year = date.getUTCFullYear();
 
-            return day+1 + ' ' + this.translations[this.locale].months[monthNumber] + ' ' + year;
+            return day + ' ' + this.translations[this.locale].months[monthNumber] + ' ' + year;
         }
     },
 }
